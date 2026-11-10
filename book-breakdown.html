@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拆书 · Just Enough English Grammar Illustrated</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #f6f8fb;
+    --card: #ffffff;
+    --ink: #1f2937;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --brand: #0ea5e9;
+    --brand-dark: #0284c7;
+    --accent: #f59e0b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  a { color: var(--brand-dark); }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    color: #fff;
+    padding: 56px 24px 48px;
+    text-align: center;
+  }
+  .hero .tag {
+    display: inline-block;
+    background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 999px;
+    padding: 4px 14px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .hero h1 { margin: 0 0 8px; font-size: 40px; font-weight: 800; }
+  .hero .sub { font-size: 18px; opacity: .95; }
+  .hero .meta { margin-top: 22px; font-size: 14px; opacity: .85; }
+
+  .container { max-width: 980px; margin: 0 auto; padding: 40px 20px; }
+
+  /* Section heading */
+  h2.sec {
+    font-size: 26px;
+    margin: 56px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2.sec::before {
+    content: "";
+    width: 6px; height: 26px;
+    background: var(--brand);
+    border-radius: 3px;
+    display: inline-block;
+  }
+  .sec-note { color: var(--muted); font-size: 15px; margin: 4px 0 20px; }
+
+  /* Map box */
+  .map-box {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 18px rgba(15,23,42,.04);
+  }
+  .mermaid { display: flex; justify-content: center; overflow-x: auto; }
+  .mermaid svg { max-width: 100%; height: auto; }
+
+  /* Chapter grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(15,23,42,.04);
+    display: flex;
+    flex-direction: column;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(15,23,42,.08); }
+  .card-head { padding: 18px 20px; color: #fff; }
+  .card-head .no { font-size: 13px; opacity: .85; letter-spacing: 1px; }
+  .card-head .name { font-size: 22px; font-weight: 800; margin-top: 2px; }
+  .card-body { padding: 18px 20px; flex: 1; }
+  .card-body .md { font-size: 14.5px; }
+  .card-body .md p { margin: 8px 0; }
+  .card-body .md ul { padding-left: 20px; margin: 8px 0; }
+  .card-body .md code { background: #f1f5f9; padding: 1px 5px; border-radius: 4px; font-size: 13px; }
+  .card-body .md strong { color: var(--brand-dark); }
+  .card-body .md h4 { margin: 10px 0 4px; font-size: 15px; color: #0f172a; }
+
+  /* color variants per chapter */
+  .c1 { background: linear-gradient(135deg,#ef4444,#f97316); }
+  .c2 { background: linear-gradient(135deg,#8b5cf6,#a855f7); }
+  .c3 { background: linear-gradient(135deg,#3b82f6,#06b6d4); }
+  .c4 { background: linear-gradient(135deg,#10b981,#34d399); }
+  .c5 { background: linear-gradient(135deg,#f59e0b,#fbbf24); }
+  .c6 { background: linear-gradient(135deg,#ec4899,#f472b6); }
+  .c7 { background: linear-gradient(135deg,#14b8a6,#2dd4bf); }
+  .c8 { background: linear-gradient(135deg,#64748b,#94a3b8); }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14.5px; }
+  th, td { border: 1px solid var(--line); padding: 10px 12px; text-align: left; }
+  th { background: #f1f5f9; }
+  tr:nth-child(even) td { background: #fafbfc; }
+
+  .footnote { text-align: center; color: var(--muted); font-size: 13px; margin: 48px 0 20px; }
+
+  /* Nav quick jump */
+  .quick { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .quick a {
+    text-decoration: none;
+    background: #fff;
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+  .quick a:hover { border-color: var(--brand); color: var(--brand-dark); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="tag">BOOK BREAKDOWN · 拆书笔记</div>
+  <h1>Just Enough English Grammar Illustrated</h1>
+  <div class="sub">只要这些，就够用的英语语法 · 图解版</div>
+  <div class="meta">作者：Gabriele Stobbe · 出版社：McGraw-Hill (2008)</div>
+</div>
+
+<div class="container">
+
+  <!-- 1. 书籍地图 -->
+  <h2 class="sec">书籍地图</h2>
+  <p class="sec-note">全书以<b>八大词性</b>为框架，每章先讲「Form 形式」再讲「Use 用法」。先看清全书结构，再逐章拆解。</p>
+  <div class="map-box">
+    <pre class="mermaid">
+flowchart TD
+    A["📘 Just Enough English Grammar Illustrated<br/><small>以8大词性为框架</small>"]
+    A --> B["1 Nouns 名词<br/><small>人/地/物的名称</small>"]
+    A --> C["2 Adjectives 形容词<br/><small>修饰名词/代词</small>"]
+    A --> D["3 Pronouns 代词<br/><small>代替名词</small>"]
+    A --> E["4 Verbs 动词<br/><small>动作/状态</small>"]
+    A --> F["5 Adverbs 副词<br/><small>修饰动词/形容词</small>"]
+    A --> G["6 Prepositions 介词<br/><small>表示位置/时间等关系</small>"]
+    A --> H["7 Conjunctions 连词<br/><small>连接词/短语/句子</small>"]
+    A --> I["8 Interjections 感叹词<br/><small>表达情感</small>"]
+    B --> J["每章=Form形式 + Use用法"]
+    C --> J
+    D --> J
+    E --> J
+    F --> J
+    G --> J
+    H --> J
+    I --> J
+    </pre>
+  </div>
+
+  <!-- 2. 快速导航 -->
+  <h2 class="sec">章节速览</h2>
+  <div class="quick">
+    <a href="#ch1">1 名词 Nouns</a>
+    <a href="#ch2">2 形容词 Adjectives</a>
+    <a href="#ch3">3 代词 Pronouns</a>
+    <a href="#ch4">4 动词 Verbs</a>
+    <a href="#ch5">5 副词 Adverbs</a>
+    <a href="#ch6">6 介词 Prepositions</a>
+    <a href="#ch7">7 连词 Conjunctions</a>
+    <a href="#ch8">8 感叹词 Interjections</a>
+    <a href="#summary">核心概念总结</a>
+  </div>
+
+  <!-- 3. 章节拆解 -->
+  <h2 class="sec">章节拆解</h2>
+  <p class="sec-note">每章提取书中核心定义与要点，附中文解读。</p>
+  <div class="grid">
+
+    <!-- 1 Nouns -->
+    <div class="card" id="ch1">
+      <div class="card-head c1"><div class="no">CHAPTER 1</div><div class="name">Nouns 名词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>A noun is a word used to name a person, place, thing, or idea.</p>
+<p><strong>中文：</strong>名词用来命名<b>人、地点、事物或概念</b>。</p>
+<h4>形式 Form</h4>
+<ul>
+<li>单复数：one/many（book → books）</li>
+<li>后缀：-tion, -ment, -ness 等常见名词词尾</li>
+<li>性：阳性/阴性/中性（masculine/feminine/neuter）</li>
+<li>冠词：a / an / the 与名词搭配</li>
+</ul>
+<h4>用法 Use</h4>
+<ul>
+<li>作<b>主语</b>（subject）</li>
+<li>作<b>宾语</b>（direct object / object of preposition）</li>
+<li>作<b>主语补足语</b>（subject complement）</li>
+<li>名词所有格（possessive）：boy's / boys'</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 Adjectives -->
+    <div class="card" id="ch2">
+      <div class="card-head c2"><div class="no">CHAPTER 2</div><div class="name">Adjectives 形容词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>Adjectives modify nouns and pronouns — they make the meaning clearer or limit it.</p>
+<p><strong>中文：</strong>形容词<b>修饰名词/代词</b>，让含义更具体或更受限。</p>
+<h4>两类形容词</h4>
+<ul>
+<li><b>描述性</b>（descriptive）：形状、大小、颜色，如 soft, blue, small</li>
+<li><b>限定性</b>（determiners / limiting）：冠词、物主、指示、疑问、不定、数词等</li>
+</ul>
+<h4>要点</h4>
+<ul>
+<li>词尾后缀：-ful, -ous, -able 等</li>
+<li>比较级/最高级：tall → taller → tallest</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 Pronouns -->
+    <div class="card" id="ch3">
+      <div class="card-head c3"><div class="no">CHAPTER 3</div><div class="name">Pronouns 代词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>A pronoun is used to replace the words for people, places, or things.</p>
+<p><strong>中文：</strong>代词<b>代替名词</b>，避免重复。</p>
+<h4>核心概念</h4>
+<ul>
+<li>人称（person）：I / you / he</li>
+<li>数（number）：单数 vs 复数</li>
+<li>性（gender）：he / she / it</li>
+<li>格：主格、宾格、所有格</li>
+</ul>
+<h4>用法</h4>
+<ul>
+<li>主格作主语（She swims.）</li>
+<li>宾格作宾语（with her）</li>
+<li>所有格表所属（hers）</li>
+<li>疑问代词 who / what；指示代词 this / that</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 Verbs -->
+    <div class="card" id="ch4">
+      <div class="card-head c4"><div class="no">CHAPTER 4</div><div class="name">Verbs 动词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>Every sentence must have a verb. Verbs express action or state.</p>
+<p><strong>中文：</strong>每个句子都<b>必须</b>有动词，表动作或状态。</p>
+<h4>四个基本形式</h4>
+<ul>
+<li>原形 base：<code>write</code></li>
+<li>过去式 past：<code>wrote</code></li>
+<li>现在分词 present participle：<code>writing</code></li>
+<li>过去分词 past participle：<code>written</code></li>
+</ul>
+<h4>类型与时态</h4>
+<ul>
+<li>实义/系/助动词；规则与不规则</li>
+<li>时态表达时间：现在、过去、将来</li>
+<li>情态动词：can, will, shall, may 等</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 Adverbs -->
+    <div class="card" id="ch5">
+      <div class="card-head c5"><div class="no">CHAPTER 5</div><div class="name">Adverbs 副词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>Adverbs modify verbs, adjectives, and other adverbs.</p>
+<p><strong>中文：</strong>副词修饰<b>动词、形容词、其他副词</b>。</p>
+<h4>五大类（修饰动词）</h4>
+<ul>
+<li>时间（when）：now, yesterday</li>
+<li>地点（where）：here, there</li>
+<li>方式（how）：slowly, well</li>
+<li>程度（degree）：very, too</li>
+<li>频率（frequency）：always, never</li>
+</ul>
+<h4>比较</h4>
+<ul>
+<li>副词/形容词都有比较级、最高级</li>
+<li>fast → faster → fastest</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 Prepositions -->
+    <div class="card" id="ch6">
+      <div class="card-head c6"><div class="no">CHAPTER 6</div><div class="name">Prepositions 介词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>A preposition and its object form a prepositional phrase.</p>
+<p><strong>中文：</strong>介词 + 宾语 = <b>介词短语</b>，表方向、位置、时间等关系。</p>
+<h4>表达关系</h4>
+<ul>
+<li>方向/移动（direction）：to, into, onto</li>
+<li>位置（location）：in, on, under, behind</li>
+<li>时间（time）：at, on, in</li>
+</ul>
+<h4>要点</h4>
+<ul>
+<li>单字介词：in, at, by</li>
+<li>复合介词：in front of, next to</li>
+<li>介词后接<b>宾格代词</b>（with her）</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 Conjunctions -->
+    <div class="card" id="ch7">
+      <div class="card-head c7"><div class="no">CHAPTER 7</div><div class="name">Conjunctions 连词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>Conjunctions join words, phrases, and sentences.</p>
+<p><strong>中文：</strong>连词连接<b>词、短语或句子</b>。</p>
+<h4>三类关系</h4>
+<ul>
+<li>并列/添加（addition）：<code>and</code></li>
+<li>选择（choice）：<code>or</code></li>
+<li>对比（contrast）：<code>but</code></li>
+</ul>
+<h4>连接层级</h4>
+<ul>
+<li>连接词：Ben <b>and</b> Susan</li>
+<li>连接短语：in the pool <b>or</b> on the beach</li>
+<li>连接句子：<b>but</b> 连接两个完整句子</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8 Interjections -->
+    <div class="card" id="ch8">
+      <div class="card-head c8"><div class="no">CHAPTER 8</div><div class="name">Interjections 感叹词</div></div>
+      <div class="card-body">
+        <div class="md">
+<p><strong>定义：</strong>Interjections express emotion or strong feeling.</p>
+<p><strong>中文：</strong>感叹词表达<b>强烈情感</b>，如 Wow! Oh! Hey!</p>
+<h4>要点</h4>
+<ul>
+<li>独立于句子结构之外</li>
+<li>常带感叹号（!）</li>
+<li>口语中用来表达惊喜、愤怒、呼唤等</li>
+</ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 4. 核心概念总结 -->
+  <h2 class="sec" id="summary">核心概念总结</h2>
+  <p class="sec-note">八大词性速查表 + 书中两大基本概念（Form 形式 / Use 用法）。</p>
+
+  <div class="map-box">
+    <pre class="mermaid">
+flowchart LR
+    S["✏️ 一句话理解八大词性"] --> A["名词 = 名字"]
+    S --> B["形容词 = 描述"]
+    S --> C["代词 = 替身"]
+    S --> D["动词 = 动作/状态"]
+    S --> E["副词 = 补充说明"]
+    S --> F["介词 = 位置关系"]
+    S --> G["连词 = 桥梁"]
+    S --> H["感叹词 = 情感"]
+    </pre>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>词性</th><th>功能</th><th>例子</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><b>1 Nouns</b></td><td>命名人、地、物、概念</td><td>pool, Susan, idea</td></tr>
+      <tr><td><b>2 Adjectives</b></td><td>修饰名词/代词</td><td>blue, small, sunny</td></tr>
+      <tr><td><b>3 Pronouns</b></td><td>代替名词</td><td>he, she, it, they</td></tr>
+      <tr><td><b>4 Verbs</b></td><td>表达动作或状态</td><td>swim, is, have</td></tr>
+      <tr><td><b>5 Adverbs</b></td><td>修饰动词/形容词/副词</td><td>slowly, very, always</td></tr>
+      <tr><td><b>6 Prepositions</b></td><td>表位置、方向、时间关系</td><td>in, on, at, under</td></tr>
+      <tr><td><b>7 Conjunctions</b></td><td>连接词、短语、句子</td><td>and, or, but</td></tr>
+      <tr><td><b>8 Interjections</b></td><td>表达情感</td><td>Wow! Oh! Hey!</td></tr>
+    </tbody>
+  </table>
+
+  <p class="footnote">基于 Gabriele Stobbe《Just Enough English Grammar Illustrated》(McGraw-Hill, 2008) 整理 · 拆书笔记</p>
+</div>
+
+<script>
+  // 渲染卡片内的 markdown
+  document.querySelectorAll('.card-body .md').forEach(el => {
+    el.innerHTML = marked.parse(el.innerHTML);
+  });
+
+  // 初始化 mermaid
+  mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: {
+    primaryColor: '#e0f2fe',
+    primaryTextColor: '#1f2937',
+    lineColor: '#94a3b8',
+    fontSize: '14px'
+  }});
+</script>
+</body>
+</html>
